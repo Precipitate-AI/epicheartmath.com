@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { Caveat, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Kalam, Architects_Daughter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const caveat = Caveat({
-  variable: "--font-handwriting",
+const kalam = Kalam({
+  weight: ["300", "400", "700"],
+  variable: "--font-marker",
   subsets: ["latin"],
   display: "swap",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-sans",
+const architectsDaughter = Architects_Daughter({
+  weight: "400",
+  variable: "--font-sketch",
   subsets: ["latin"],
   display: "swap",
 });
@@ -21,23 +23,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Epic Heart Math | HRV Resonant Breath Pacer & Personal Hub",
+  title: "Epic Heart Math | HRV Breath Pacer",
   description:
-    "A distraction-free Heart Rate Variability (HRV) resonant breath pacer and personal hub by Bob Chugani. Train nervous system coherence, baroreflex balance, and mental clarity.",
-  keywords: [
-    "Heart Rate Variability",
-    "HRV",
-    "HeartMath",
-    "Breath Pacer",
-    "Resonant Frequency Breathing",
-    "Bob Chugani",
-    "Autonomic Coherence",
-  ],
-  authors: [{ name: "Bob Chugani", url: "https://epicheartmath.com" }],
+    "A distraction-free Heart Rate Variability (HRV) breath pacer by Bob Chugani. Pure 5.5s resonant frequency breathing on kraft paper.",
   openGraph: {
-    title: "Epic Heart Math | Resonant Breath Pacer",
-    description:
-      "Distraction-free HRV resonant breathing (5.5s in, 5.5s out) on tactile kraft paper. Reconnect with nervous system balance.",
+    title: "Epic Heart Math",
+    description: "Pure HRV breath pacer on kraft paper. 5.5s in, 5.5s out.",
     url: "https://epicheartmath.com",
     siteName: "Epic Heart Math",
     type: "website",
@@ -50,8 +41,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${caveat.variable} ${plusJakarta.variable} ${jetbrainsMono.variable}`}>
-      <body className="antialiased text-[#2C2621] selection:bg-[#C5B091]/40 min-h-screen relative font-sans overflow-x-hidden">
+    <html
+      lang="en"
+      className={`${kalam.variable} ${architectsDaughter.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="antialiased text-[#231A12] selection:bg-[#C29F78]/40 min-h-screen relative overflow-x-hidden">
         {children}
       </body>
     </html>

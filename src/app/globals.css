@@ -2,63 +2,87 @@
 
 @layer base {
   :root {
-    --font-handwriting: 'Caveat', cursive;
-    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-marker: 'Kalam', cursive;
+    --font-sketch: 'Architects Daughter', cursive;
     --font-mono: 'JetBrains Mono', monospace;
 
-    /* Kraft Paper Design System Tokens */
-    --kraft-base: #d7c4a7;
-    --kraft-dark: #c3ad8e;
-    --kraft-light: #e5d6c2;
-    --kraft-ink: #2c2621;
-    --kraft-ink-muted: #5e5347;
-    --kraft-accent: #c85a32;
-    --kraft-accent-light: #e07a5f;
-    --kraft-border: rgba(44, 38, 33, 0.15);
+    /* Real Kraft Paper Color Palette */
+    --kraft-bg: #cbb092;
+    --kraft-dark: #b59878;
+    --kraft-light: #d8c1a7;
+    --kraft-ink: #231a12;
+    --kraft-ink-subtle: rgba(35, 26, 18, 0.7);
 
-    /* Pacer Dial tokens matching HeartMath Inner Balance theme */
-    --travel: 160px;
-    --dial: min(320px, 75vw);
-    --seg-dim: 0.15;
+    /* Pacer Sizing & Geometry from omni-hrv */
+    --dial: min(340px, 78vmin);
+    --bar-h: calc(var(--dial) * 0.046);
+    --bar-gap: calc(var(--dial) * 0.024);
+    --band-h: calc(var(--bar-h) * 5 + var(--bar-gap) * 4);
+    --well: calc(var(--dial) * 0.73);
+    --band-pad: calc(var(--dial) * 0.04);
+    --travel: calc(var(--well) - var(--band-h) - var(--band-pad) * 2);
+    --seg-dim: 0.14;
+    --ink: #04080e;
+    --paper: #ffffff;
   }
 
   body {
-    background-color: var(--kraft-base);
+    background-color: var(--kraft-bg);
     color: var(--kraft-ink);
-    font-family: var(--font-sans);
+    font-family: var(--font-marker);
   }
 }
 
-.font-handwriting {
-  font-family: var(--font-handwriting);
+.font-marker {
+  font-family: var(--font-marker);
+}
+
+.font-sketch {
+  font-family: var(--font-sketch);
 }
 
 .font-mono {
   font-family: var(--font-mono);
 }
 
-/* Kraft Paper Background Noise & Texture */
-.kraft-paper-bg {
-  background-color: #d7c4a7;
+/* Authentic Kraft Paper Backdrop with Organic Pulp & Noise Texture */
+.real-kraft-bg {
+  background-color: #cbb092;
   background-image: 
-    radial-gradient(circle at 50% 50%, rgba(245, 237, 226, 0.4) 0%, rgba(205, 179, 139, 0.3) 100%),
-    linear-gradient(135deg, rgba(229, 214, 194, 0.5) 0%, rgba(195, 173, 142, 0.5) 100%);
+    radial-gradient(circle at 50% 40%, rgba(225, 205, 178, 0.45) 0%, rgba(185, 155, 122, 0.55) 100%),
+    linear-gradient(125deg, rgba(215, 192, 163, 0.4) 0%, rgba(175, 146, 113, 0.5) 100%);
   position: relative;
 }
 
-.kraft-paper-bg::before {
+.real-kraft-bg::before {
   content: "";
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
-  opacity: 0.35;
+  opacity: 0.45;
   pointer-events: none;
   z-index: 1;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.17 0 0 0 0 0.15 0 0 0 0 0.13 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='kraftNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.15 0 0 0 0 0.11 0 0 0 0 0.08 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23kraftNoise)'/%3E%3C/svg%3E");
 }
 
-/* Pacer Dial Styles from omni-hrv */
+/* Subtle fibrous crease lines */
+.real-kraft-bg::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 2;
+  background-image: 
+    repeating-linear-gradient(45deg, rgba(35, 26, 18, 0.03) 0px, transparent 2px, transparent 12px),
+    radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Omni-HRV Pacer exact CSS rules from omni-hrv/src/app/pacer.css
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .pacer-stage {
   display: flex;
   flex-direction: column;
@@ -71,23 +95,20 @@
   position: relative;
   width: var(--dial);
   height: var(--dial);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
 }
 
-/* Top Crown Marker */
 .pacer-crown {
   position: absolute;
-  top: -14px;
+  top: calc(var(--dial) * -0.075);
   left: 50%;
-  transform: translateX(-50%);
-  width: 10px;
-  height: 10px;
+  width: calc(var(--dial) * 0.038);
+  height: calc(var(--dial) * 0.038);
+  margin-left: calc(var(--dial) * -0.019);
   border-radius: 50%;
-  background: var(--kraft-accent);
-  box-shadow: 0 0 12px rgba(200, 90, 50, 0.6);
-  z-index: 10;
+  background: var(--kraft-ink);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .pacer-dial {
@@ -95,52 +116,38 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: #181512;
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.35),
-    inset 0 2px 6px rgba(255, 255, 255, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
+  background: radial-gradient(125% 125% at 50% 34%, #10161f 0%, #0a1017 62%, #04080e 100%);
+  box-shadow: 
+    0 24px 48px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 max(1px, 0.35%) rgba(255, 255, 255, 0.07);
 }
 
 .pacer-well {
   position: absolute;
-  width: 82.5%;
-  height: 82.5%;
+  inset: 13.5%;
   border-radius: 50%;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #0f0d0b;
 }
 
 .pacer-band {
   position: absolute;
-  top: 50%;
-  left: 10%;
-  right: 10%;
-  height: var(--travel);
+  left: 0;
+  right: 0;
+  top: var(--band-pad);
+  height: var(--band-h);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transform: translateY(0);
-  animation-name: omni-pace;
-  animation-duration: var(--cycle, 11000ms);
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+  gap: var(--bar-gap);
+  animation: omni-pace var(--cycle, 11000ms) linear infinite;
   will-change: transform;
 }
 
 .pacer-bar {
-  width: 100%;
-  height: 6px;
-  border-radius: 3px;
-  background: linear-gradient(90deg, #e07a5f 0%, #f4f1de 50%, #e07a5f 100%);
-  box-shadow: 0 0 8px rgba(224, 122, 95, 0.5);
+  flex: none;
+  height: var(--bar-h);
+  border-radius: calc(var(--bar-h) * 0.18);
+  background: #ffffff;
 }
 
 .pacer-rim {
@@ -148,54 +155,44 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  color: #ffffff;
   pointer-events: none;
 }
 
 .pacer-seg {
-  color: #e07a5f;
+  opacity: var(--seg-dim);
   animation-duration: var(--cycle, 11000ms);
   animation-iteration-count: infinite;
   animation-timing-function: step-end;
   will-change: opacity;
 }
 
-/* Frosted Kraft Glass */
-.kraft-glass {
-  background: rgba(229, 214, 194, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(44, 38, 33, 0.12);
-  box-shadow: 0 8px 32px rgba(44, 38, 33, 0.12);
+/* Whiteboard / Felt Marker Button Styling */
+.marker-btn {
+  font-family: var(--font-marker);
+  border: 2px solid rgba(35, 26, 18, 0.8);
+  background: rgba(240, 222, 198, 0.85);
+  box-shadow: 2px 3px 0px rgba(35, 26, 18, 0.8);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  transition: all 0.15s ease-in-out;
 }
 
-/* Custom handwritten underline effect */
-.hand-sketch-underline {
-  position: relative;
-}
-.hand-sketch-underline::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: currentColor;
-  border-radius: 2px;
-  opacity: 0.6;
-  transform: rotate(-0.5deg);
+.marker-btn:hover {
+  transform: translateY(-2px) rotate(-1deg);
+  box-shadow: 4px 5px 0px rgba(35, 26, 18, 0.9);
+  background: rgba(248, 233, 212, 0.95);
 }
 
-/* Sketch card styling */
-.sketch-card {
-  background: rgba(245, 237, 226, 0.65);
-  border: 1.5px solid rgba(44, 38, 33, 0.2);
-  box-shadow: 3px 4px 0px rgba(44, 38, 33, 0.12);
-  border-radius: 12px;
-  transition: all 0.2s ease-in-out;
+.marker-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px rgba(35, 26, 18, 0.9);
 }
 
-.sketch-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 5px 7px 0px rgba(44, 38, 33, 0.15);
-  border-color: rgba(44, 38, 33, 0.35);
+/* Handwritten sketch card modal */
+.sketch-modal {
+  background: #cbb092;
+  background-image: radial-gradient(circle at 50% 30%, rgba(235, 215, 188, 0.6) 0%, rgba(185, 155, 122, 0.7) 100%);
+  border: 3.5px solid #231a12;
+  box-shadow: 6px 8px 0px #231a12;
+  border-radius: 18px 4px 22px 6px/6px 20px 4px 18px;
 }

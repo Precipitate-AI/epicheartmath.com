@@ -6,15 +6,15 @@
     --font-sketch: 'Architects Daughter', cursive;
     --font-mono: 'JetBrains Mono', monospace;
 
-    /* Real Kraft Paper Color Palette */
-    --kraft-bg: #cbb092;
-    --kraft-dark: #b59878;
-    --kraft-light: #d8c1a7;
-    --kraft-ink: #231a12;
-    --kraft-ink-subtle: rgba(35, 26, 18, 0.7);
+    /* Darker, Richer Kraft Paper Palette */
+    --kraft-bg: #a38363;
+    --kraft-dark: #8c6c4c;
+    --kraft-light: #ba9a79;
+    --kraft-ink: #1f160e;
+    --kraft-ink-muted: rgba(31, 22, 14, 0.7);
 
-    /* Pacer Sizing & Geometry from omni-hrv */
-    --dial: min(340px, 78vmin);
+    /* Omni-HRV Pacer Sizing - Heroic Screen-Filling Dial */
+    --dial: min(520px, 86vmin);
     --bar-h: calc(var(--dial) * 0.046);
     --bar-gap: calc(var(--dial) * 0.024);
     --band-h: calc(var(--bar-h) * 5 + var(--bar-gap) * 4);
@@ -22,8 +22,12 @@
     --band-pad: calc(var(--dial) * 0.04);
     --travel: calc(var(--well) - var(--band-h) - var(--band-pad) * 2);
     --seg-dim: 0.14;
-    --ink: #04080e;
-    --paper: #ffffff;
+
+    /* Kraft Amber / Gold Theme for Dial Elements */
+    --pacer-disc-bg: #14100d;
+    --pacer-bar-color: #ebd9c1;
+    --pacer-rim-color: #dfb075;
+    --pacer-accent-glow: #f4c47a;
   }
 
   body {
@@ -45,42 +49,42 @@
   font-family: var(--font-mono);
 }
 
-/* Authentic Kraft Paper Backdrop with Organic Pulp & Noise Texture */
+/* Darker, Rich Fibrous Kraft Paper Backdrop */
 .real-kraft-bg {
-  background-color: #cbb092;
+  background-color: #a38363;
   background-image: 
-    radial-gradient(circle at 50% 40%, rgba(225, 205, 178, 0.45) 0%, rgba(185, 155, 122, 0.55) 100%),
-    linear-gradient(125deg, rgba(215, 192, 163, 0.4) 0%, rgba(175, 146, 113, 0.5) 100%);
+    radial-gradient(ellipse at 50% 40%, rgba(200, 172, 140, 0.45) 0%, rgba(135, 105, 75, 0.75) 100%),
+    linear-gradient(135deg, rgba(175, 145, 115, 0.5) 0%, rgba(130, 100, 70, 0.6) 100%);
   position: relative;
 }
 
+/* Multi-layered SVG Paper Fibers & Grain */
 .real-kraft-bg::before {
   content: "";
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
-  opacity: 0.45;
+  opacity: 0.55;
   pointer-events: none;
   z-index: 1;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='kraftNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.15 0 0 0 0 0.11 0 0 0 0 0.08 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23kraftNoise)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='kraftNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.12 0 0 0 0 0.08 0 0 0 0 0.05 0 0 0 0.28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23kraftNoise)'/%3E%3C/svg%3E");
 }
 
-/* Subtle fibrous crease lines */
 .real-kraft-bg::after {
   content: "";
   position: fixed;
   inset: 0;
-  opacity: 0.15;
+  opacity: 0.22;
   pointer-events: none;
   z-index: 2;
   background-image: 
-    repeating-linear-gradient(45deg, rgba(35, 26, 18, 0.03) 0px, transparent 2px, transparent 12px),
-    radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+    repeating-linear-gradient(65deg, rgba(30, 20, 10, 0.05) 0px, transparent 1px, transparent 8px),
+    repeating-linear-gradient(-35deg, rgba(255, 255, 255, 0.04) 0px, transparent 1px, transparent 14px);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Omni-HRV Pacer exact CSS rules from omni-hrv/src/app/pacer.css
+   Omni-HRV Pacer CSS with Transition Dots & Kraft Brown Color Theme
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .pacer-stage {
@@ -99,16 +103,47 @@
   place-items: center;
 }
 
-.pacer-crown {
+/* Transition Dots at 12 o'clock (Top) and 6 o'clock (Bottom) */
+.transition-dot-top {
   position: absolute;
-  top: calc(var(--dial) * -0.075);
+  top: calc(var(--dial) * -0.045);
   left: 50%;
-  width: calc(var(--dial) * 0.038);
-  height: calc(var(--dial) * 0.038);
-  margin-left: calc(var(--dial) * -0.019);
+  transform: translateX(-50%);
+  width: calc(var(--dial) * 0.032);
+  height: calc(var(--dial) * 0.032);
   border-radius: 50%;
-  background: var(--kraft-ink);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background: var(--pacer-rim-color);
+  opacity: 0.3;
+  transition: all 0.2s ease-out;
+  z-index: 10;
+}
+
+.transition-dot-top.active {
+  opacity: 1;
+  background: var(--pacer-accent-glow);
+  box-shadow: 0 0 16px var(--pacer-accent-glow), 0 0 32px var(--pacer-accent-glow);
+  transform: translateX(-50%) scale(1.4);
+}
+
+.transition-dot-bottom {
+  position: absolute;
+  bottom: calc(var(--dial) * -0.045);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--dial) * 0.032);
+  height: calc(var(--dial) * 0.032);
+  border-radius: 50%;
+  background: var(--pacer-rim-color);
+  opacity: 0.3;
+  transition: all 0.2s ease-out;
+  z-index: 10;
+}
+
+.transition-dot-bottom.active {
+  opacity: 1;
+  background: var(--pacer-accent-glow);
+  box-shadow: 0 0 16px var(--pacer-accent-glow), 0 0 32px var(--pacer-accent-glow);
+  transform: translateX(-50%) scale(1.4);
 }
 
 .pacer-dial {
@@ -117,10 +152,11 @@
   height: 100%;
   border-radius: 50%;
   overflow: hidden;
-  background: radial-gradient(125% 125% at 50% 34%, #10161f 0%, #0a1017 62%, #04080e 100%);
+  /* Dark Kraft Charcoal Slate Gradient */
+  background: radial-gradient(125% 125% at 50% 34%, #221c17 0%, #16120e 62%, #0d0a07 100%);
   box-shadow: 
-    0 24px 48px rgba(0, 0, 0, 0.4),
-    inset 0 0 0 max(1px, 0.35%) rgba(255, 255, 255, 0.07);
+    0 28px 60px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 max(1px, 0.35%) rgba(235, 217, 193, 0.12);
 }
 
 .pacer-well {
@@ -139,7 +175,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--bar-gap);
-  animation: omni-pace var(--cycle, 11000ms) linear infinite;
   will-change: transform;
 }
 
@@ -147,7 +182,8 @@
   flex: none;
   height: var(--bar-h);
   border-radius: calc(var(--bar-h) * 0.18);
-  background: #ffffff;
+  background: linear-gradient(90deg, #dfb075 0%, #ebd9c1 50%, #dfb075 100%);
+  box-shadow: 0 0 6px rgba(223, 176, 117, 0.4);
 }
 
 .pacer-rim {
@@ -155,7 +191,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  color: #ffffff;
+  color: var(--pacer-rim-color);
   pointer-events: none;
 }
 
@@ -167,32 +203,32 @@
   will-change: opacity;
 }
 
-/* Whiteboard / Felt Marker Button Styling */
+/* Whiteboard Marker Button Styling */
 .marker-btn {
   font-family: var(--font-marker);
-  border: 2px solid rgba(35, 26, 18, 0.8);
-  background: rgba(240, 222, 198, 0.85);
-  box-shadow: 2px 3px 0px rgba(35, 26, 18, 0.8);
+  border: 2px solid rgba(31, 22, 14, 0.85);
+  background: rgba(220, 195, 165, 0.9);
+  box-shadow: 2.5px 3.5px 0px rgba(31, 22, 14, 0.85);
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
   transition: all 0.15s ease-in-out;
 }
 
 .marker-btn:hover {
-  transform: translateY(-2px) rotate(-1deg);
-  box-shadow: 4px 5px 0px rgba(35, 26, 18, 0.9);
-  background: rgba(248, 233, 212, 0.95);
+  transform: translateY(-2px) rotate(-0.5deg);
+  box-shadow: 4px 5px 0px rgba(31, 22, 14, 0.9);
+  background: rgba(232, 210, 182, 0.95);
 }
 
 .marker-btn:active {
   transform: translateY(1px);
-  box-shadow: 1px 1px 0px rgba(35, 26, 18, 0.9);
+  box-shadow: 1px 1px 0px rgba(31, 22, 14, 0.9);
 }
 
 /* Handwritten sketch card modal */
 .sketch-modal {
-  background: #cbb092;
-  background-image: radial-gradient(circle at 50% 30%, rgba(235, 215, 188, 0.6) 0%, rgba(185, 155, 122, 0.7) 100%);
-  border: 3.5px solid #231a12;
-  box-shadow: 6px 8px 0px #231a12;
+  background: #a38363;
+  background-image: radial-gradient(circle at 50% 30%, rgba(215, 190, 160, 0.7) 0%, rgba(150, 120, 90, 0.8) 100%);
+  border: 3.5px solid #1f160e;
+  box-shadow: 6px 8px 0px #1f160e;
   border-radius: 18px 4px 22px 6px/6px 20px 4px 18px;
 }

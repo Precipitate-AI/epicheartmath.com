@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import { paceKeyframes, rimKeyframes, SEGMENTS } from "@/lib/pace";
+import React, { useEffect, useState, useRef } from "react";
+import { rimKeyframes, SEGMENTS, breathHeight } from "@/lib/pace";
 
 const BARS = [1, 0.8, 0.55, 0.3, 0.12];
 const SEG_R_INNER = 84.5;
@@ -22,12 +22,20 @@ export function PacerDial({
   soundEnabled = false,
 }: PacerDialProps) {
   const cycle = inhaleMs + exhaleMs;
-  const css = paceKeyframes(inhaleMs, exhaleMs) + rimKeyframes(inhaleMs, exhaleMs);
+  const turnFrac = inhaleMs / cycle;
+  const rimCss = rimKeyframes(inhaleMs, exhaleMs);
 
   const audioCtxRef = useRef<AudioContext | null>(null);
 
-  // Play a soft, warm singing bowl chime at turns
-  const playTurnChime = (pitch: "top" | "bottom") => {
+  // Transition dot state highlights
+  const [topActive, setTopActive] = useState(false);
+  const [bottomActive, setBottomActive] = useState(false);
+
+  // Direct element ref for hardware-accelerated 60fps translateY motion
+  const bandRef = useRef<HTMLDivElement>(null);
+
+  // Resonant audio chime generator
+  const playChime = (pitch: "top" | "bottom") => {
     try {
       if (!audioCtxRef.current) {
         const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
@@ -52,7 +60,7 @@ export function PacerDial({
       osc.frequency.setValueAtTime(freq, ctx.currentTime);
 
       gain.gain.setValueAtTime(0, ctx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 0.08);
+      gain.gain.linearRampToValueAtTime(0.14, ctx.currentTime + 0.05);
       gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 2.8);
 
       osc.connect(gain);
@@ -65,42 +73,65 @@ export function PacerDial({
     }
   };
 
-  // Precise sound sync loop aligned with the CSS cycle
+  // Frame-accurate clock loop driving translateY, transition dots, and turn-synced sound
   useEffect(() => {
-    if (!soundEnabled) return;
+    let animId: number;
+    const startTime = performance.now();
+    let hasPlayedTop = false;
+    let hasPlayedBottom = false;
 
-    let timeoutTop: NodeJS.Timeout | null = null;
-    let cycleInterval: NodeJS.Timeout | null = null;
+    const tick = () => {
+      const now = performance.now();
+      const elapsed = (now - startTime) % cycle;
+      const tNorm = elapsed / cycle;
 
-    const startSync = () => {
-      // Play bottom turn immediately at start of cycle
-      playTurnChime("bottom");
+      // 1. Calculate exact sinusoidal breath height (0 = bottom, 1 = top)
+      const h = breathHeight(tNorm, turnFrac);
 
-      // Schedule top turn chime at exact inhaleMs
-      timeoutTop = setTimeout(() => {
-        playTurnChime("top");
-      }, inhaleMs);
+      // 2. Hardware-accelerated translateY offset
+      // translateY runs downward: top of stroke = 0 offset, bottom = 100% travel
+      if (bandRef.current) {
+        const offsetPct = ((1 - h) * 100).toFixed(4);
+        bandRef.current.style.transform = `translateY(calc(var(--travel) * ${1 - h}))`;
+      }
 
-      // Repeat loop every cycle
-      cycleInterval = setInterval(() => {
-        playTurnChime("bottom");
-        timeoutTop = setTimeout(() => {
-          playTurnChime("top");
-        }, inhaleMs);
-      }, cycle);
+      // 3. Exact Turn Event & Transition Dot triggers
+      const isNearTop = Math.abs(elapsed - inhaleMs) < 180;
+      const isNearBottom = elapsed < 180 || elapsed > cycle - 180;
+
+      if (isNearTop) {
+        setTopActive(true);
+        if (!hasPlayedTop) {
+          hasPlayedTop = true;
+          if (soundEnabled) playChime("top");
+        }
+      } else {
+        setTopActive(false);
+        hasPlayedTop = false;
+      }
+
+      if (isNearBottom) {
+        setBottomActive(true);
+        if (!hasPlayedBottom) {
+          hasPlayedBottom = true;
+          if (soundEnabled) playChime("bottom");
+        }
+      } else {
+        setBottomActive(false);
+        hasPlayedBottom = false;
+      }
+
+      animId = requestAnimationFrame(tick);
     };
 
-    startSync();
+    animId = requestAnimationFrame(tick);
 
-    return () => {
-      if (timeoutTop) clearTimeout(timeoutTop);
-      if (cycleInterval) clearInterval(cycleInterval);
-    };
-  }, [soundEnabled, inhaleMs, exhaleMs, cycle]);
+    return () => cancelAnimationFrame(animId);
+  }, [cycle, turnFrac, inhaleMs, soundEnabled]);
 
   return (
     <>
-      <style>{css}</style>
+      <style>{rimCss}</style>
       <div
         className="pacer"
         style={{
@@ -108,13 +139,22 @@ export function PacerDial({
           ...(size ? { ["--dial" as string]: size } : {}),
         }}
       >
-        {/* Crown marker at 12 o'clock */}
-        <span className="pacer-crown" aria-hidden="true" />
+        {/* Top Transition Dot (12 o'clock) */}
+        <span
+          className={`transition-dot-top ${topActive ? "active" : ""}`}
+          aria-hidden="true"
+        />
+
+        {/* Bottom Transition Dot (6 o'clock) */}
+        <span
+          className={`transition-dot-bottom ${bottomActive ? "active" : ""}`}
+          aria-hidden="true"
+        />
 
         <div className="pacer-dial">
           {/* Well clipping the travelling band */}
           <div className="pacer-well">
-            <div className="pacer-band">
+            <div ref={bandRef} className="pacer-band" style={{ animation: "none" }}>
               {BARS.map((opacity, i) => (
                 <span key={i} className="pacer-bar" style={{ opacity }} />
               ))}

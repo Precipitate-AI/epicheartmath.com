@@ -51,7 +51,7 @@ export default function Home() {
   };
 
   return (
-    <KraftBackground className="real-kraft-bg flex flex-col min-h-screen justify-between items-center p-6 select-none">
+    <KraftBackground className="real-kraft-bg flex flex-col min-h-screen justify-between items-center p-4 sm:p-8 select-none">
       {/* Floating Top-Right "about bob" Button (Reveals on interaction) */}
       <div
         className={`fixed top-6 right-6 z-40 transition-all duration-500 ${
@@ -60,55 +60,55 @@ export default function Home() {
       >
         <button
           onClick={() => setAboutOpen(true)}
-          className="marker-btn px-4 py-2 text-xl font-marker font-bold text-[#231A12] flex items-center space-x-2"
+          className="marker-btn px-4 py-2 text-xl font-marker font-bold text-[#1F160E] flex items-center space-x-2"
         >
           <User className="w-5 h-5 stroke-[2.5]" />
           <span>about bob</span>
         </button>
       </div>
 
-      {/* Main Centered Omni-HRV Pacer Stage */}
-      <main className="flex-1 flex flex-col items-center justify-center w-full my-auto z-10">
+      {/* Main Heroic Screen-Filling Pacer Dial */}
+      <main className="flex-1 flex flex-col items-center justify-center w-full max-w-4xl my-auto z-10 py-6">
         <PacerDial
           inhaleMs={paceSeconds * 1000}
           exhaleMs={paceSeconds * 1000}
           soundEnabled={soundEnabled}
         />
 
-        {/* Minimal Pace & Sound Controls (Reveals on interaction) */}
+        {/* Pace & Sound Controls (Reveals on interaction) */}
         <div
-          className={`mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 ${
+          className={`mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 ${
             showControls ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
           }`}
         >
-          {/* Breath Pace Controller */}
-          <div className="flex items-center space-x-3 bg-[#E0C9AD]/80 border-2 border-[#231A12]/80 px-4 py-1.5 rounded-full shadow-[2px_3px_0px_#231A12]">
+          {/* Pace Controller */}
+          <div className="flex items-center space-x-3 bg-[#D8BA96]/90 border-2 border-[#1F160E]/85 px-4 py-1.5 rounded-full shadow-[2.5px_3.5px_0px_#1F160E]">
             <button
               onClick={decreasePace}
-              className="p-1 text-[#231A12] hover:scale-110 active:scale-95 transition-transform"
+              className="p-1 text-[#1F160E] hover:scale-110 active:scale-95 transition-transform"
               aria-label="Decrease breath pace"
             >
               <Minus className="w-5 h-5 stroke-[3]" />
             </button>
 
-            <span className="font-mono text-sm font-bold text-[#231A12] tracking-wider min-w-[70px] text-center">
+            <span className="font-mono text-sm font-bold text-[#1F160E] tracking-wider min-w-[70px] text-center">
               {paceSeconds.toFixed(1)}s pace
             </span>
 
             <button
               onClick={increasePace}
-              className="p-1 text-[#231A12] hover:scale-110 active:scale-95 transition-transform"
+              className="p-1 text-[#1F160E] hover:scale-110 active:scale-95 transition-transform"
               aria-label="Increase breath pace"
             >
               <Plus className="w-5 h-5 stroke-[3]" />
             </button>
           </div>
 
-          {/* Turn-Synced Audio Chime Button */}
+          {/* Sound Toggle */}
           <button
             onClick={() => setSoundEnabled(!soundEnabled)}
             className={`marker-btn px-4 py-1.5 text-base font-marker font-bold flex items-center space-x-2 ${
-              soundEnabled ? "bg-[#C85A32] text-white border-[#231A12]" : "text-[#231A12]"
+              soundEnabled ? "bg-[#B8572A] text-white border-[#1F160E]" : "text-[#1F160E]"
             }`}
           >
             {soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}

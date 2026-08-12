@@ -1,26 +1,201 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --font-handwriting: 'Caveat', cursive;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Kraft Paper Design System Tokens */
+    --kraft-base: #d7c4a7;
+    --kraft-dark: #c3ad8e;
+    --kraft-light: #e5d6c2;
+    --kraft-ink: #2c2621;
+    --kraft-ink-muted: #5e5347;
+    --kraft-accent: #c85a32;
+    --kraft-accent-light: #e07a5f;
+    --kraft-border: rgba(44, 38, 33, 0.15);
+
+    /* Pacer Dial tokens matching HeartMath Inner Balance theme */
+    --travel: 160px;
+    --dial: min(320px, 75vw);
+    --seg-dim: 0.15;
+  }
+
+  body {
+    background-color: var(--kraft-base);
+    color: var(--kraft-ink);
+    font-family: var(--font-sans);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.font-handwriting {
+  font-family: var(--font-handwriting);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Kraft Paper Background Noise & Texture */
+.kraft-paper-bg {
+  background-color: #d7c4a7;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(245, 237, 226, 0.4) 0%, rgba(205, 179, 139, 0.3) 100%),
+    linear-gradient(135deg, rgba(229, 214, 194, 0.5) 0%, rgba(195, 173, 142, 0.5) 100%);
+  position: relative;
+}
+
+.kraft-paper-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.17 0 0 0 0 0.15 0 0 0 0 0.13 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Pacer Dial Styles from omni-hrv */
+.pacer-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.pacer {
+  position: relative;
+  width: var(--dial);
+  height: var(--dial);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Top Crown Marker */
+.pacer-crown {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--kraft-accent);
+  box-shadow: 0 0 12px rgba(200, 90, 50, 0.6);
+  z-index: 10;
+}
+
+.pacer-dial {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #181512;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.35),
+    inset 0 2px 6px rgba(255, 255, 255, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.pacer-well {
+  position: absolute;
+  width: 82.5%;
+  height: 82.5%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f0d0b;
+}
+
+.pacer-band {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: var(--travel);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateY(0);
+  animation-name: omni-pace;
+  animation-duration: var(--cycle, 11000ms);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  will-change: transform;
+}
+
+.pacer-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #e07a5f 0%, #f4f1de 50%, #e07a5f 100%);
+  box-shadow: 0 0 8px rgba(224, 122, 95, 0.5);
+}
+
+.pacer-rim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.pacer-seg {
+  color: #e07a5f;
+  animation-duration: var(--cycle, 11000ms);
+  animation-iteration-count: infinite;
+  animation-timing-function: step-end;
+  will-change: opacity;
+}
+
+/* Frosted Kraft Glass */
+.kraft-glass {
+  background: rgba(229, 214, 194, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(44, 38, 33, 0.12);
+  box-shadow: 0 8px 32px rgba(44, 38, 33, 0.12);
+}
+
+/* Custom handwritten underline effect */
+.hand-sketch-underline {
+  position: relative;
+}
+.hand-sketch-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: currentColor;
+  border-radius: 2px;
+  opacity: 0.6;
+  transform: rotate(-0.5deg);
+}
+
+/* Sketch card styling */
+.sketch-card {
+  background: rgba(245, 237, 226, 0.65);
+  border: 1.5px solid rgba(44, 38, 33, 0.2);
+  box-shadow: 3px 4px 0px rgba(44, 38, 33, 0.12);
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+.sketch-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 7px 0px rgba(44, 38, 33, 0.15);
+  border-color: rgba(44, 38, 33, 0.35);
 }

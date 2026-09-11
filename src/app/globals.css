@@ -224,11 +224,74 @@
   box-shadow: 1px 1px 0px rgba(31, 22, 14, 0.9);
 }
 
+/* Specific Tab Switcher Button Styling */
+.marker-tab {
+  font-family: var(--font-marker);
+  border: 2px solid #1F160E;
+  background: rgba(220, 195, 165, 0.9);
+  color: #1F160E;
+  box-shadow: 2.5px 3.5px 0px #1F160E;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  transition: all 0.15s ease-in-out;
+}
+
+.marker-tab:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 3.5px 4.5px 0px #1F160E;
+  background: rgba(232, 210, 182, 1);
+}
+
+.marker-tab.active {
+  background: #1F160E !important;
+  color: #FAF4ED !important;
+  border-color: #1F160E !important;
+  box-shadow: 1px 1.5px 0px #1F160E !important;
+  transform: translateY(1px) !important;
+}
+
 /* Handwritten sketch card modal */
 .sketch-modal {
   background: #a38363;
-  background-image: radial-gradient(circle at 50% 30%, rgba(215, 190, 160, 0.7) 0%, rgba(150, 120, 90, 0.8) 100%);
+  background-image: radial-gradient(circle at 50% 30%, rgba(215, 190, 160, 0.8) 0%, rgba(150, 120, 90, 0.9) 100%);
   border: 3.5px solid #1f160e;
   box-shadow: 6px 8px 0px #1f160e;
   border-radius: 18px 4px 22px 6px/6px 20px 4px 18px;
 }
+
+/* Custom Modal Scrollbar */
+.sketch-modal *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.sketch-modal *::-webkit-scrollbar-track {
+  background: rgba(31, 22, 14, 0.08);
+  border-radius: 9999px;
+}
+
+.sketch-modal *::-webkit-scrollbar-thumb {
+  background: rgba(31, 22, 14, 0.4);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.sketch-modal *::-webkit-scrollbar-thumb:hover {
+  background: rgba(31, 22, 14, 0.7);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+

@@ -25,7 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const SITE_URL = "https://epicheartmath.com";
-const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-EHM2026BREATH";
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-RP0C9NF4NY";
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
 export const viewport: Viewport = {

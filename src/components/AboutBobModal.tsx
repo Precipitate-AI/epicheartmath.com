@@ -410,7 +410,7 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
             <div className="space-y-6">
               <div className="space-y-4 text-base sm:text-lg leading-relaxed">
                 <p>
-                  I came to software engineering sideways. A bachelor’s in <strong>Information Technology</strong> (American University in Dubai), followed by a master’s in <strong>Applied Linguistics</strong> (University of New England, Australia), and years teaching English for Academic Purposes and HeartMath HRV breathing.
+                  I came to software engineering sideways. A bachelor’s in <strong>Information Technology</strong> (American University in Dubai), followed by a master’s in <strong>Applied Linguistics</strong> (University of New England, Australia), and years lecturing in English for Academic Purposes and mentoring in HeartMath HRV coherence.
                 </p>
 
                 <div className="bg-[#FAF4ED]/80 border-2 border-[#1F160E] p-4 sm:p-5 rounded-xl space-y-2 shadow-[2px_3px_0px_#1F160E]">
@@ -418,12 +418,12 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
                     The Linguistic & Engineering Nexus:
                   </div>
                   <p className="font-sketch text-base text-[#1F160E]/90 leading-relaxed">
-                    Working with Large Language Models turned out to be half software systems engineering and half applied linguistics. Prompts, structured function calling, vector retrieval boundaries, and semantic failure modes are approached with the same analytical precision as syntax, semantics, and discourse mechanics.
+                    Working with Large Language Models turned out to be half software systems engineering and half applied linguistics. Prompts, structured tool calling, vector retrieval boundaries, and semantic failure modes are approached with the same analytical precision as syntax, semantics, and discourse mechanics.
                   </p>
                 </div>
 
                 <p>
-                  Over the past few years of building autonomous multi-agent pipelines, 24/7 trading systems, and high-velocity ventures, I recognized the ultimate limiter wasn't compute—it was human nervous system capacity.
+                  Today, I co-found and operate four production AI companies (<strong>Guestar</strong>, <strong>Precipitate.ai</strong>, <strong>Knowmads Bali</strong>, <strong>Epic</strong>) through holding company <strong>EPIC Resilience</strong>. Over years of operating 197+ autonomous jobs and 24/7 trading systems, I recognized the ultimate bottleneck in high-performance execution wasn't compute—it was human nervous system capacity.
                 </p>
 
                 <div className="bg-[#FAF4ED]/80 border-2 border-[#1F160E] p-4 sm:p-5 rounded-xl space-y-2 shadow-[2px_3px_0px_#1F160E]">
@@ -437,12 +437,14 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
                 </div>
 
                 <div className="space-y-2 font-sketch text-base bg-[#1F160E]/5 p-4 rounded-xl border border-[#1F160E]/20">
-                  <div className="font-bold text-lg font-marker text-[#1F160E]">Education & Certification:</div>
+                  <div className="font-bold text-lg font-marker text-[#1F160E]">Education & Background:</div>
                   <ul className="space-y-1.5 text-[#1F160E]/90">
-                    <li>• <strong>Bachelor’s in Information Technology</strong> — American University in Dubai</li>
-                    <li>• <strong>Master’s in Applied Linguistics</strong> — University of New England, Australia</li>
-                    <li>• <strong>Certified HeartMath Mentor & Coach</strong> — HRV, Neurobiology & Stress Resilience</li>
-                    <li>• <strong>Insight Timer Teacher</strong> — 14 courses published, 20,700+ students worldwide</li>
+                    <li>• <strong>Master’s in Applied Linguistics</strong> — University of New England (UNE), Australia (2016–2018)</li>
+                    <li>• <strong>Bachelor’s in Information Technology</strong> — American University in Dubai (2002–2006)</li>
+                    <li>• <strong>Certified HeartMath Coach / Mentor</strong> — HRV, Neurobiology & Stress Resilience (2019)</li>
+                    <li>• <strong>Lecturer in English for Academic Purposes</strong> — Shanghai Business College & Guangdong Experimental (2017–2020)</li>
+                    <li>• <strong>Corporate EAP & Technical Training</strong> — Nortel Networks, China Mobile, TaylorDavis</li>
+                    <li>• <strong>Insight Timer Teacher</strong> — 14 courses in 3 languages, 20,700+ students worldwide</li>
                   </ul>
                 </div>
               </div>
@@ -452,7 +454,18 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
 
         {/* Modal Footer */}
         <div className="p-4 sm:p-5 border-t-2 border-[#231A12]/20 flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#a38363]/40">
-          <div className="flex items-center space-x-4 text-sm sm:text-base flex-wrap justify-center sm:justify-start">
+          <div className="flex items-center space-x-3 sm:space-x-4 text-sm sm:text-base flex-wrap justify-center sm:justify-start">
+            <a
+              href="https://www.linkedin.com/in/bobchugani"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-1.5 font-bold hover:text-[#B8572A] underline"
+            >
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+              <span>LinkedIn</span>
+            </a>
             <a
               href="https://github.com/Precipitate-AI"
               target="_blank"

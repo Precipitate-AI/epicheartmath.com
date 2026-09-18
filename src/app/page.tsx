@@ -67,13 +67,29 @@ export default function Home() {
         </button>
       </div>
 
-      {/* Main Heroic Screen-Filling Pacer Dial */}
-      <main className="flex-1 flex flex-col items-center justify-center w-full max-w-4xl my-auto z-10 py-6">
-        <PacerDial
-          inhaleMs={paceSeconds * 1000}
-          exhaleMs={paceSeconds * 1000}
-          soundEnabled={soundEnabled}
-        />
+      {/* Main Heroic Screen-Filling Pacer Dial with Flanking Breathe Prompts */}
+      <main className="flex-1 flex flex-col items-center justify-center w-full max-w-5xl my-auto z-10 py-6">
+        <div className="relative flex items-center justify-center w-full">
+          {/* Left Prompt: breathe in */}
+          <div className="absolute left-2 sm:left-4 md:left-8 lg:left-12 top-1/2 -translate-y-1/2 select-none pointer-events-none text-center">
+            <span className="font-marker text-base sm:text-2xl md:text-3xl lg:text-4xl text-[#4a3424]/40 tracking-wider">
+              breathe in
+            </span>
+          </div>
+
+          <PacerDial
+            inhaleMs={paceSeconds * 1000}
+            exhaleMs={paceSeconds * 1000}
+            soundEnabled={soundEnabled}
+          />
+
+          {/* Right Prompt: breathe out */}
+          <div className="absolute right-2 sm:right-4 md:right-8 lg:right-12 top-1/2 -translate-y-1/2 select-none pointer-events-none text-center">
+            <span className="font-marker text-base sm:text-2xl md:text-3xl lg:text-4xl text-[#4a3424]/40 tracking-wider">
+              breathe out
+            </span>
+          </div>
+        </div>
 
         {/* Pace & Sound Controls (Reveals on interaction) */}
         <div

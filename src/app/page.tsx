@@ -5,6 +5,12 @@ import { KraftBackground } from "@/components/KraftBackground";
 import { PacerDial } from "@/components/PacerDial";
 import { AboutBobModal } from "@/components/AboutBobModal";
 import { Volume2, VolumeX, Minus, Plus, User } from "lucide-react";
+import {
+  trackPaceChange,
+  trackSoundToggle,
+  trackModalOpen,
+  trackPacerMilestone,
+} from "@/lib/analytics";
 
 export default function Home() {
   const [paceSeconds, setPaceSeconds] = useState(5.5);
@@ -13,6 +19,28 @@ export default function Home() {
   const [showControls, setShowControls] = useState(false);
 
   const idleTimer = useRef<NodeJS.Timeout | null>(null);
+  const sessionStartTime = useRef<number>(Date.now());
+  const milestonesFired = useRef<Set<number>>(new Set());
+
+  // Track breathing session milestones (1m, 3m, 5m, 10m)
+  useEffect(() => {
+    sessionStartTime.current = Date.now();
+    milestonesFired.current.clear();
+
+    const milestoneCheckInterval = setInterval(() => {
+      const elapsedMinutes = Math.floor((Date.now() - sessionStartTime.current) / 60000);
+      const targetMilestones = [1, 3, 5, 10, 15, 20];
+
+      for (const m of targetMilestones) {
+        if (elapsedMinutes >= m && !milestonesFired.current.has(m)) {
+          milestonesFired.current.add(m);
+          trackPacerMilestone(m, paceSeconds);
+        }
+      }
+    }, 10000);
+
+    return () => clearInterval(milestoneCheckInterval);
+  }, [paceSeconds]);
 
   // Reveal controls & "about bob" button on mouse movement, scroll, or touch swipe
   useEffect(() => {
@@ -42,12 +70,37 @@ export default function Home() {
     };
   }, [aboutOpen]);
 
+  const handleOpenAbout = () => {
+    trackModalOpen("about_bob", "courses");
+    setAboutOpen(true);
+  };
+
   const decreasePace = () => {
-    setPaceSeconds((prev) => Math.max(4.0, parseFloat((prev - 0.5).toFixed(1))));
+    setPaceSeconds((prev) => {
+      const next = Math.max(4.0, parseFloat((prev - 0.5).toFixed(1)));
+      if (next !== prev) {
+        trackPaceChange(next, prev);
+      }
+      return next;
+    });
   };
 
   const increasePace = () => {
-    setPaceSeconds((prev) => Math.min(8.0, parseFloat((prev + 0.5).toFixed(1))));
+    setPaceSeconds((prev) => {
+      const next = Math.min(8.0, parseFloat((prev + 0.5).toFixed(1)));
+      if (next !== prev) {
+        trackPaceChange(next, prev);
+      }
+      return next;
+    });
+  };
+
+  const toggleSound = () => {
+    setSoundEnabled((prev) => {
+      const next = !prev;
+      trackSoundToggle(next);
+      return next;
+    });
   };
 
   return (
@@ -59,7 +112,7 @@ export default function Home() {
         }`}
       >
         <button
-          onClick={() => setAboutOpen(true)}
+          onClick={handleOpenAbout}
           className="marker-btn px-4 py-2 text-xl font-marker font-bold text-[#1F160E] flex items-center space-x-2"
         >
           <User className="w-5 h-5 stroke-[2.5]" />
@@ -136,7 +189,7 @@ export default function Home() {
 
           {/* Sound Toggle */}
           <button
-            onClick={() => setSoundEnabled(!soundEnabled)}
+            onClick={toggleSound}
             className={`marker-btn px-4 py-1.5 text-base font-marker font-bold flex items-center space-x-2 ${
               soundEnabled ? "bg-[#B8572A] text-white border-[#1F160E]" : "text-[#1F160E]"
             }`}

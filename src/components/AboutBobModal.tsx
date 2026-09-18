@@ -19,6 +19,13 @@ import {
 } from "lucide-react";
 import { INSIGHT_COURSES, TOTAL_COURSE_METRICS, Course } from "@/data/courses";
 import { VENTURES, TELEMETRY, TECH_CAPABILITIES } from "@/data/ventures";
+import {
+  trackTabSwitch,
+  trackLanguageFilter,
+  trackCourseClick,
+  trackVentureClick,
+  trackOutboundClick,
+} from "@/lib/analytics";
 
 interface AboutBobModalProps {
   isOpen: boolean;
@@ -104,7 +111,10 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
           {/* Navigation Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
             <button
-              onClick={() => setActiveTab("courses")}
+              onClick={() => {
+                trackTabSwitch("courses", "about_bob");
+                setActiveTab("courses");
+              }}
               className={`marker-tab shrink-0 px-3 sm:px-3.5 py-1.5 text-xs sm:text-base font-bold flex items-center gap-1.5 sm:gap-2 whitespace-nowrap transition-all ${
                 activeTab === "courses" ? "active" : ""
               }`}
@@ -114,7 +124,10 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
             </button>
 
             <button
-              onClick={() => setActiveTab("builder")}
+              onClick={() => {
+                trackTabSwitch("builder", "about_bob");
+                setActiveTab("builder");
+              }}
               className={`marker-tab shrink-0 px-3 sm:px-3.5 py-1.5 text-xs sm:text-base font-bold flex items-center gap-1.5 sm:gap-2 whitespace-nowrap transition-all ${
                 activeTab === "builder" ? "active" : ""
               }`}
@@ -124,7 +137,10 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
             </button>
 
             <button
-              onClick={() => setActiveTab("bio")}
+              onClick={() => {
+                trackTabSwitch("bio", "about_bob");
+                setActiveTab("bio");
+              }}
               className={`marker-tab shrink-0 px-3 sm:px-3.5 py-1.5 text-xs sm:text-base font-bold flex items-center gap-1.5 sm:gap-2 whitespace-nowrap transition-all ${
                 activeTab === "bio" ? "active" : ""
               }`}
@@ -156,6 +172,7 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
                     href="https://insighttimer.com"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackOutboundClick("https://insighttimer.com", "Teacher Profile", "about_modal_header")}
                     className="marker-btn px-3 py-1 text-xs sm:text-sm font-bold flex items-center gap-1.5 self-start sm:self-auto bg-[#EBD9C1]"
                   >
                     <span>Teacher Profile</span>
@@ -211,7 +228,10 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
                   ).map((filter) => (
                     <button
                       key={filter.key}
-                      onClick={() => setLangFilter(filter.key)}
+                      onClick={() => {
+                        trackLanguageFilter(filter.key);
+                        setLangFilter(filter.key);
+                      }}
                       className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${
                         langFilter === filter.key
                           ? "bg-[#1F160E] text-[#EBD9C1] border-[#1F160E]"
@@ -266,6 +286,7 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
                         href={course.url}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackCourseClick(course.title, course.id, course.url)}
                         className="marker-btn px-2.5 py-1 text-xs font-bold flex items-center gap-1 text-[#1F160E] hover:text-[#B8572A]"
                       >
                         <span>Listen</span>
@@ -368,6 +389,7 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
                               href={venture.link.href}
                               target="_blank"
                               rel="noopener noreferrer"
+                              onClick={() => trackVentureClick(venture.title, venture.link!.href)}
                               className="marker-btn px-2.5 py-1 text-xs font-bold flex items-center gap-1 text-[#1F160E] hover:text-[#B8572A]"
                             >
                               <span>{venture.link.label}</span>
@@ -459,6 +481,7 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
               href="https://www.linkedin.com/in/bobchugani"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackOutboundClick("https://www.linkedin.com/in/bobchugani", "LinkedIn", "about_modal_footer")}
               className="flex items-center space-x-1.5 font-bold hover:text-[#B8572A] underline"
             >
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -470,6 +493,7 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
               href="https://github.com/Precipitate-AI"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackOutboundClick("https://github.com/Precipitate-AI", "GitHub", "about_modal_footer")}
               className="flex items-center space-x-1.5 font-bold hover:text-[#B8572A] underline"
             >
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -479,6 +503,7 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
             </a>
             <a
               href="mailto:bob@precipitate.ai"
+              onClick={() => trackOutboundClick("mailto:bob@precipitate.ai", "Email", "about_modal_footer")}
               className="flex items-center space-x-1.5 font-bold hover:text-[#B8572A] underline"
             >
               <Mail className="w-4 h-4" />
@@ -488,6 +513,7 @@ export function AboutBobModal({ isOpen, onClose, initialTab = "courses" }: About
               href="https://insighttimer.com"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackOutboundClick("https://insighttimer.com", "Insight Timer", "about_modal_footer")}
               className="flex items-center space-x-1.5 font-bold hover:text-[#B8572A] underline"
             >
               <GraduationCap className="w-4 h-4" />

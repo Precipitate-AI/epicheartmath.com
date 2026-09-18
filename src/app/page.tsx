@@ -68,17 +68,17 @@ export default function Home() {
       </div>
 
       {/* Main Heroic Screen-Filling Pacer Dial with Flanking / Responsive Breathe Prompts */}
-      <main className="flex-1 flex flex-col items-center justify-center w-full max-w-5xl my-auto z-10 py-4">
-        {/* Mobile Top Prompt */}
-        <div className="sm:hidden mb-2 select-none pointer-events-none text-center">
-          <span className="font-marker text-lg text-[#4a3424]/40 tracking-wider">
+      <main className="flex-1 flex flex-col items-center justify-center w-full max-w-6xl my-auto z-10 py-6">
+        {/* Mobile Top Prompt - Generous breathing room above top dot */}
+        <div className="sm:hidden mb-7 select-none pointer-events-none text-center">
+          <span className="font-marker text-xl text-[#4a3424]/40 tracking-wider">
             breathe in
           </span>
         </div>
 
         <div className="relative flex items-center justify-center w-full">
-          {/* Desktop Left Prompt: breathe in */}
-          <div className="hidden sm:block absolute left-2 md:left-6 lg:left-12 top-1/2 -translate-y-1/2 select-none pointer-events-none text-center">
+          {/* Desktop Left Prompt: breathe in - Generous padding from pacer */}
+          <div className="hidden sm:block absolute left-4 md:left-8 lg:left-16 xl:left-24 top-1/2 -translate-y-1/2 select-none pointer-events-none text-center">
             <span className="font-marker text-2xl md:text-3xl lg:text-4xl text-[#4a3424]/40 tracking-wider">
               breathe in
             </span>
@@ -90,17 +90,17 @@ export default function Home() {
             soundEnabled={soundEnabled}
           />
 
-          {/* Desktop Right Prompt: breathe out */}
-          <div className="hidden sm:block absolute right-2 md:right-6 lg:right-12 top-1/2 -translate-y-1/2 select-none pointer-events-none text-center">
+          {/* Desktop Right Prompt: breathe out - Generous padding from pacer */}
+          <div className="hidden sm:block absolute right-4 md:right-8 lg:right-16 xl:right-24 top-1/2 -translate-y-1/2 select-none pointer-events-none text-center">
             <span className="font-marker text-2xl md:text-3xl lg:text-4xl text-[#4a3424]/40 tracking-wider">
               breathe out
             </span>
           </div>
         </div>
 
-        {/* Mobile Bottom Prompt */}
-        <div className="sm:hidden mt-2 select-none pointer-events-none text-center">
-          <span className="font-marker text-lg text-[#4a3424]/40 tracking-wider">
+        {/* Mobile Bottom Prompt - Generous breathing room below bottom dot */}
+        <div className="sm:hidden mt-7 select-none pointer-events-none text-center">
+          <span className="font-marker text-xl text-[#4a3424]/40 tracking-wider">
             breathe out
           </span>
         </div>

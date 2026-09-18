@@ -14,7 +14,7 @@
     --kraft-ink-muted: rgba(31, 22, 14, 0.7);
 
     /* Omni-HRV Pacer Sizing - Heroic Screen-Filling Dial */
-    --dial: min(520px, 86vmin);
+    --dial: min(520px, 80vmin);
     --bar-h: calc(var(--dial) * 0.046);
     --bar-gap: calc(var(--dial) * 0.024);
     --band-h: calc(var(--bar-h) * 5 + var(--bar-gap) * 4);

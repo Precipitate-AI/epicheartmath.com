@@ -67,12 +67,19 @@ export default function Home() {
         </button>
       </div>
 
-      {/* Main Heroic Screen-Filling Pacer Dial with Flanking Breathe Prompts */}
-      <main className="flex-1 flex flex-col items-center justify-center w-full max-w-5xl my-auto z-10 py-6">
+      {/* Main Heroic Screen-Filling Pacer Dial with Flanking / Responsive Breathe Prompts */}
+      <main className="flex-1 flex flex-col items-center justify-center w-full max-w-5xl my-auto z-10 py-4">
+        {/* Mobile Top Prompt */}
+        <div className="sm:hidden mb-2 select-none pointer-events-none text-center">
+          <span className="font-marker text-lg text-[#4a3424]/40 tracking-wider">
+            breathe in
+          </span>
+        </div>
+
         <div className="relative flex items-center justify-center w-full">
-          {/* Left Prompt: breathe in */}
-          <div className="absolute left-2 sm:left-4 md:left-8 lg:left-12 top-1/2 -translate-y-1/2 select-none pointer-events-none text-center">
-            <span className="font-marker text-base sm:text-2xl md:text-3xl lg:text-4xl text-[#4a3424]/40 tracking-wider">
+          {/* Desktop Left Prompt: breathe in */}
+          <div className="hidden sm:block absolute left-2 md:left-6 lg:left-12 top-1/2 -translate-y-1/2 select-none pointer-events-none text-center">
+            <span className="font-marker text-2xl md:text-3xl lg:text-4xl text-[#4a3424]/40 tracking-wider">
               breathe in
             </span>
           </div>
@@ -83,12 +90,19 @@ export default function Home() {
             soundEnabled={soundEnabled}
           />
 
-          {/* Right Prompt: breathe out */}
-          <div className="absolute right-2 sm:right-4 md:right-8 lg:right-12 top-1/2 -translate-y-1/2 select-none pointer-events-none text-center">
-            <span className="font-marker text-base sm:text-2xl md:text-3xl lg:text-4xl text-[#4a3424]/40 tracking-wider">
+          {/* Desktop Right Prompt: breathe out */}
+          <div className="hidden sm:block absolute right-2 md:right-6 lg:right-12 top-1/2 -translate-y-1/2 select-none pointer-events-none text-center">
+            <span className="font-marker text-2xl md:text-3xl lg:text-4xl text-[#4a3424]/40 tracking-wider">
               breathe out
             </span>
           </div>
+        </div>
+
+        {/* Mobile Bottom Prompt */}
+        <div className="sm:hidden mt-2 select-none pointer-events-none text-center">
+          <span className="font-marker text-lg text-[#4a3424]/40 tracking-wider">
+            breathe out
+          </span>
         </div>
 
         {/* Pace & Sound Controls (Reveals on interaction) */}

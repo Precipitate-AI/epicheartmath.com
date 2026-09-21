@@ -11,12 +11,16 @@ import {
   trackModalOpen,
   trackPacerMilestone,
 } from "@/lib/analytics";
+import { useWakeLock } from "@/hooks/useWakeLock";
 
 export default function Home() {
   const [paceSeconds, setPaceSeconds] = useState(5.5);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [showControls, setShowControls] = useState(false);
+
+  // Automatically keep screen awake during breathing session
+  useWakeLock();
 
   const idleTimer = useRef<NodeJS.Timeout | null>(null);
   const sessionStartTime = useRef<number>(Date.now());

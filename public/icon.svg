@@ -1,13 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
-  <circle cx="50" cy="50" r="48" fill="#a38363" stroke="#1f160e" stroke-width="2"/>
-  <circle cx="50" cy="50" r="40" fill="#14100d" stroke="#dfb075" stroke-width="1.5"/>
-  <circle cx="50" cy="50" r="28" fill="#0f0c09"/>
-  <!-- Resonant Bars -->
-  <rect x="28" y="38" width="44" height="4" rx="2" fill="#ebd9c1" opacity="1"/>
-  <rect x="31" y="44" width="38" height="3.5" rx="1.75" fill="#ebd9c1" opacity="0.8"/>
-  <rect x="34" y="50" width="32" height="3" rx="1.5" fill="#ebd9c1" opacity="0.55"/>
-  <rect x="38" y="55" width="24" height="2.5" rx="1.25" fill="#ebd9c1" opacity="0.3"/>
-  <!-- Transition Dots -->
-  <circle cx="50" cy="6" r="3" fill="#f4c47a" stroke="#b8572a" stroke-width="1"/>
-  <circle cx="50" cy="94" r="3" fill="#8c6c4c"/>
+  <defs>
+    <radialGradient id="kraftBg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#be9e7e"/>
+      <stop offset="100%" stop-color="#8a694a"/>
+    </radialGradient>
+    <radialGradient id="dialInner" cx="50%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#261d15"/>
+      <stop offset="100%" stop-color="#100c09"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Solid Kraft Paper Background -->
+  <rect width="100" height="100" fill="url(#kraftBg)"/>
+
+  <!-- Outer Dial Base -->
+  <circle cx="50" cy="50" r="41" fill="url(#dialInner)" stroke="#c49a6c" stroke-width="1.2"/>
+
+  <!-- Top Apex Dot -->
+  <circle cx="50" cy="9.5" r="2.4" fill="#F4C47A" stroke="#B8572A" stroke-width="0.8"/>
+  <circle cx="50" cy="90.5" r="1.6" fill="#8C6C4C" opacity="0.6"/>
+
+  <!-- Inner Well -->
+  <circle cx="50" cy="50" r="28" fill="#0c0907" stroke="#2b2017" stroke-width="0.8"/>
+
+  <!-- Resonant Sine Pulse Bars -->
+  <rect x="25" y="36" width="50" height="4.2" rx="2.1" fill="#F0DFC7" opacity="1"/>
+  <rect x="25" y="42.2" width="50" height="4.2" rx="2.1" fill="#EBD9C1" opacity="0.8"/>
+  <rect x="25" y="48.4" width="50" height="4.2" rx="2.1" fill="#EBD9C1" opacity="0.55"/>
+  <rect x="25" y="54.6" width="50" height="4.2" rx="2.1" fill="#EBD9C1" opacity="0.32"/>
+  <rect x="25" y="60.8" width="50" height="4.2" rx="2.1" fill="#EBD9C1" opacity="0.14"/>
 </svg>

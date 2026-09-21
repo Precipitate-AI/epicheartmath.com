@@ -52,24 +52,27 @@ export function useWakeLock() {
     // 1. Try Native Screen Wake Lock API (iOS 16.4+, Chrome, Edge, Android)
     if ("wakeLock" in navigator) {
       try {
-        if (!wakeLockRef.current || wakeLockRef.current.released) {
-          const lock = await navigator.wakeLock.request("screen");
-          wakeLockRef.current = lock;
+        if (wakeLockRef.current && !wakeLockRef.current.released) {
           setIsActive(true);
-
-          lock.addEventListener("release", () => {
-            wakeLockRef.current = null;
-            // Fall back to video loop if released unexpectedly
-            enableVideoFallback();
-          });
           return;
         }
+
+        const lock = await navigator.wakeLock.request("screen");
+        wakeLockRef.current = lock;
+        setIsActive(true);
+
+        lock.addEventListener("release", () => {
+          wakeLockRef.current = null;
+          // Fall back to video loop if released unexpectedly
+          enableVideoFallback();
+        });
+        return;
       } catch (err) {
         console.debug("[WakeLock Native] Not allowed, falling back to video:", err);
       }
     }
 
-    // 2. Always engage iOS Safari Media Engine fallback
+    // 2. Always engage iOS Safari Media Engine fallback if native lock unavailable or failed
     enableVideoFallback();
   }, [enableVideoFallback]);
 

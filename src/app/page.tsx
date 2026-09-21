@@ -20,7 +20,7 @@ export default function Home() {
   const [showControls, setShowControls] = useState(false);
 
   // Automatically keep screen awake during breathing session
-  useWakeLock();
+  const { isActive } = useWakeLock();
 
   const idleTimer = useRef<NodeJS.Timeout | null>(null);
   const sessionStartTime = useRef<number>(Date.now());
@@ -201,6 +201,14 @@ export default function Home() {
             {soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
             <span>{soundEnabled ? "Sound Synced" : "Sound Muted"}</span>
           </button>
+
+          {/* Screen Awake Status Badge */}
+          {isActive && (
+            <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-[#FAF4ED]/80 border border-[#1F160E]/40 text-xs font-mono font-bold text-[#1F160E] shadow-[1.5px_2px_0px_#1F160E]">
+              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
+              <span>Screen Awake</span>
+            </div>
+          )}
         </div>
       </main>
 
